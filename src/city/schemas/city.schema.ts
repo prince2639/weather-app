@@ -1,12 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type CityDocument = City & Document;
-
 @Schema()
-export class City {
+export class City extends Document {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 }
 
 export const CitySchema = SchemaFactory.createForClass(City);

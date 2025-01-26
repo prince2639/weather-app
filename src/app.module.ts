@@ -10,7 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true,
     }),
     MongooseModule.forRoot(
-      'mongodb+srv://pp275688:tnKloEe424IPAgno@cluster0.zipfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+      'mongodb+srv://pp275688:wCPazgKRauMMTryR@cluster0.zipfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
     ),
     WeatherModule,
   ],

@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./weather-app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_URL=<your_mongodb_url>
+      - OPENWEATHER_API_KEY=<your_api_key>
+      - HTTP_ADMIN_USER=admin
+      - HTTP_ADMIN_PASS=Pp@275688
+    command: npm run start:prod
+
+  frontend:
+    build:
+      context: ./weather-frontend
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:3000

@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-// import { CitiesModule } from './cities/cities.module';
-// import { CityService } from './city/city.service';
-// import { CityModule } from './city/city.module';
-// import { CitiesModule } from './cities/cities.module';
-// import { WeatherController } from './weather/weather.controller';
-// import { WeatherService } from './weather/weather.service';
-import { WeatherService } from './weather/weather.service';
-import { WeatherController } from './weather/weather.controller';
+import { WeatherModule } from './weather/weather.module';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [],
-  controllers: [AppController, WeatherController],
-  providers: [AppService, WeatherService],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env', // Specify the path to your .env file
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(
+      'mongodb+srv://pp275688:tnKloEe424IPAgno@cluster0.zipfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    ),
+    WeatherModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

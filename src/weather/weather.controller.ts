@@ -1,41 +1,49 @@
 // src/weather/weather.controller.ts
-import { Controller, Get, Param, UseGuards, Post, Body } from '@nestjs/common';
+
+import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
 import { WeatherService } from './weather.service';
-import { CityService } from '../city/city.service';
-import { AuthGuard } from '../auth/auth.guard';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { WeatherResponseDto, CreateCityDto } from './weather.dto';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { BasicAuthGuard } from '../auth/basic-auth.guard';
 
 @ApiTags('Weather')
 @Controller('weather')
 export class WeatherController {
-  constructor(
-    private weatherService: WeatherService,
-    private cityService: CityService,
-  ) {}
+  constructor(private readonly weatherService: WeatherService) {}
 
-  @Get()
+  @Get('all')
   @ApiOperation({ summary: 'Get weather for all cities' })
-  async getAllWeather() {
-    const cities = await this.cityService.findAll();
-    return this.weatherService.getAllWeather(cities.map((city) => city.name));
+  @ApiResponse({
+    status: 200,
+    description: 'Returns weather data for all cities',
+    type: [WeatherResponseDto],
+  })
+  async getAllWeather(): Promise<WeatherResponseDto[]> {
+    return this.weatherService.getAllWeather();
   }
 
   @Get(':cityName')
   @ApiOperation({ summary: 'Get weather for a specific city' })
-  async getWeather(@Param('cityName') cityName: string) {
+  @ApiResponse({
+    status: 200,
+    description: 'Returns weather data for a specific city',
+    type: WeatherResponseDto,
+  })
+  async getWeather(
+    @Param('cityName') cityName: string,
+  ): Promise<WeatherResponseDto> {
     return this.weatherService.getWeather(cityName);
   }
-}
 
-@ApiTags('Admin')
-@Controller('admin')
-export class AdminController {
-  constructor(private cityService: CityService) {}
-
-  @UseGuards(AuthGuard)
   @Post('add-city')
-  @ApiOperation({ summary: 'Add a city to the database' })
-  async addCity(@Body() cityDto: { name: string }) {
-    return this.cityService.create(cityDto);
+  @UseGuards(BasicAuthGuard)
+  @ApiOperation({ summary: 'Add a city for weather tracking' })
+  @ApiResponse({
+    status: 201,
+    description: 'City added successfully',
+    type: CreateCityDto,
+  })
+  async addCity(@Body() createCityDto: CreateCityDto): Promise<CreateCityDto> {
+    return this.weatherService.addCity(createCityDto);
   }
 }

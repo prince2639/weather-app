@@ -3,11 +3,12 @@
 import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
 import { WeatherService } from './weather.service';
 import { WeatherResponseDto, CreateCityDto } from './weather.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBasicAuth } from '@nestjs/swagger';
 import { BasicAuthGuard } from '../auth/basic-auth.guard';
 
 @ApiTags('Weather')
-@Controller('weather')
+// @ApiBasicAuth('basic-auth')
+@Controller('/api/weather')
 export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
@@ -22,7 +23,7 @@ export class WeatherController {
     return this.weatherService.getAllWeather();
   }
 
-  @Get(':cityName')
+  @Get('/:cityName')
   @ApiOperation({ summary: 'Get weather for a specific city' })
   @ApiResponse({
     status: 200,
@@ -35,6 +36,7 @@ export class WeatherController {
     return this.weatherService.getWeather(cityName);
   }
 
+  @ApiBasicAuth('basic-auth')
   @Post('add-city')
   @UseGuards(BasicAuthGuard)
   @ApiOperation({ summary: 'Add a city for weather tracking' })

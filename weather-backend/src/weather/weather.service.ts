@@ -7,6 +7,7 @@ import { CityDto, WeatherResponseDto } from './weather.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { City } from './city.schema';
+import * as https from 'https';
 
 @Injectable()
 export class WeatherService {
@@ -19,6 +20,7 @@ export class WeatherService {
     const apiKey = this.configService.get('OPENWEATHER_API_KEY');
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`,
+      { httpsAgent: new https.Agent({rejectUnauthorized: false})}
     );
     return this.formatWeatherResponse(response.data);
   }

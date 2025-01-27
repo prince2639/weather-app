@@ -15,11 +15,13 @@ export default async function handler(
   }
 
   try {
+    console.log(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`,
     );
     res.status(200).json(response.data);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 }

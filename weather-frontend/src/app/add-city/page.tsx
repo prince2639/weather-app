@@ -1,6 +1,6 @@
-// frontend/pages/add-city.js
-"use client"
+"use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import the useRouter hook
 import axios from "axios";
 
 const AddCity = () => {
@@ -8,6 +8,8 @@ const AddCity = () => {
   const [country, setCountry] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const router = useRouter(); // Initialize useRouter
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -20,7 +22,8 @@ const AddCity = () => {
 
       // Post request to backend to create a city
       await axios.post(
-        `http://localhost:3001/api/weather/add-city`, {name,country},
+        `http://localhost:3001/api/weather/add-city`,
+        { name, country },
         {
           headers: {
             Authorization: auth,
@@ -39,7 +42,9 @@ const AddCity = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Add New City</h1>
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Add New City
+        </h1>
 
         {error && (
           <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-md">
@@ -94,6 +99,12 @@ const AddCity = () => {
             Add City
           </button>
         </form>
+        <button
+          onClick={() => router.push("/all")} // Navigate to the `/all` page
+          className="w-full bg-red-600 text-white font-semibold rounded-lg py-2 px-4 my-5 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Get All Cities
+        </button>
       </div>
     </div>
   );

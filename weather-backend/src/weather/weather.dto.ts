@@ -1,19 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsArray, IsOptional, IsNotEmpty } from 'class-validator';
 
-// DTO for a single city
 export class CityDto {
   @ApiProperty({
     description: 'The name of the city',
   })
   @IsString()
-  name!: string; // Using definite assignment assertion
+  name!: string; 
 
   @ApiProperty({
     description: 'The country code for the city',
   })
   @IsString()
-  country!: string; // Using definite assignment assertion
+  country!: string; 
 
   constructor(name: string, country: string) {
     this.name = name;
@@ -21,13 +20,12 @@ export class CityDto {
   }
 }
 
-// DTO for weather data response
 export class WeatherResponseDto {
   @ApiProperty()
-  name!: string; // Using definite assignment assertion
+  name!: string; 
 
   @ApiProperty()
-  country!: string; // Using definite assignment assertion
+  country!: string; 
 
   @ApiProperty()
   main!: {
@@ -66,19 +64,18 @@ export class WeatherResponseDto {
   }
 }
 
-// DTO for creating a city (used in admin API)
 export class CreateCityDto {
   @ApiProperty({
     description: 'The name of the city',
   })
   @IsString()
-  name!: string; // Using definite assignment assertion
+  name!: string; 
 
   @ApiProperty({
     description: 'The country code of the city',
   })
   @IsString()
-  country!: string; // Using definite assignment assertion
+  country!: string; 
 
   constructor(name: string, country: string) {
     this.name = name;

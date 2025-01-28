@@ -1,5 +1,3 @@
-// src/weather/weather.controller.ts
-
 import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
 import { WeatherService } from './weather.service';
 import { WeatherResponseDto, CreateCityDto } from './weather.dto';

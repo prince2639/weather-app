@@ -1,5 +1,3 @@
-// src/weather/city.schema.ts
-
 import { Schema, Document } from 'mongoose';
 
 export interface City extends Document {

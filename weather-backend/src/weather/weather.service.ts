@@ -1,5 +1,3 @@
-// src/weather/weather.service.ts
-
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';

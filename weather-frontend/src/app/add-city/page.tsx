@@ -15,12 +15,10 @@ const AddCity = () => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
-
     try {
-      // Basic Auth Header
+
       const auth = "Basic " + btoa("admin:Pp@275688"); // Replace with actual credentials
 
-      // Post request to backend to create a city
       await axios.post(
         `http://localhost:3001/api/weather/add-city`,
         { name, country },

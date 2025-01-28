@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env', // Specify the path to your .env file
+      envFilePath: '.env', 
       isGlobal: true,
     }),
     MongooseModule.forRoot(

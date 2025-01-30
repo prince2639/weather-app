@@ -9,12 +9,11 @@ const HomePage = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter()
 
-  // Function to fetch weather data using the Next.js API route
   const fetchWeather = async () => {
     try {
-      setError(""); // Reset error message
-      setWeatherData(null); // Reset weather data
-      const response = await axios.get(`http://localhost:3001/api/weather/${city}`); // Calling Next.js API route
+      setError(""); 
+      setWeatherData(null); 
+      const response = await axios.get(`http://localhost:3001/api/weather/${city}`);
       console.log(response.data);
       const data = await response.data;
       setWeatherData(data);

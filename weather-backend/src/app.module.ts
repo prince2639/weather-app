@@ -9,9 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       envFilePath: '.env', 
       isGlobal: true,
     }),
-    MongooseModule.forRoot(
-      'mongodb+srv://pp275688:wCPazgKRauMMTryR@cluster0.zipfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    MongooseModule.forRoot('mongodb://db:27017/mydb'),
     WeatherModule,
   ],
   controllers: [],

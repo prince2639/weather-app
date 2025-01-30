@@ -1,21 +1,46 @@
+version: "3.8"
 
 services:
   backend:
     build:
-      context: sandythegreat343/prince_project:backend
+      context: ./weather-backend  
+    # image: weather_backend:latest
     ports:
-      - "3000:3000"
+      - "3001:3001"
     environment:
-      - DB_URL=<your_mongodb_url>
-      - OPENWEATHER_API_KEY=<your_api_key>
+      - MONGO_URI=mongodb://db:27017/mydb
+      - OPENWEATHER_API_KEY=4c1c12ba2378884a3a154aa927b00096
       - HTTP_ADMIN_USER=admin
       - HTTP_ADMIN_PASS=Pp@275688
-    command: npm run start:prod
+    networks:
+      - mynetwork
+    command: npm run start
+    depends_on:
+      - db
 
   frontend:
     build:
-      context: sandythegreat343/prince_project:latest
+      context: ./weather-frontend  
+    # image: weather_frontend:latest
     ports:
-      - "3001:3000"
+      - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:3000
+      - NEXT_PUBLIC_API_URL=http://backend:3001
+    networks:
+      - mynetwork
+    command: npm run dev
+    depends_on:
+      - backend  
+
+  db:
+    image: mongo:latest  
+    volumes:
+      - .mongo-data:/data/db
+    networks:
+      - mynetwork
+    ports:
+      - "27017:27017"
+
+networks:
+  mynetwork:
+    driver: bridge

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import the useRouter hook
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const AddCity = () => {
@@ -9,15 +9,23 @@ const AddCity = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
-    try {
 
-      const auth = "Basic " + btoa("admin:Pp@275688"); // Replace with actual credentials
+    try {
+      const username = window.prompt("Enter admin username:");
+      const password = window.prompt("Enter admin password:");
+
+      if (!username || !password) {
+        setError("Authentication canceled or incomplete.");
+        return;
+      }
+
+      const auth = "Basic " + btoa(`${username}:${password}`);
 
       await axios.post(
         `http://localhost:3001/api/weather/add-city`,
@@ -33,7 +41,7 @@ const AddCity = () => {
       setName("");
       setCountry("");
     } catch (err) {
-      setError("Failed to add city.");
+      setError("Failed to add city. Please check credentials.");
     }
   };
 

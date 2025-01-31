@@ -4,14 +4,13 @@ services:
   backend:
     build:
       context: ./weather-backend  
-    # image: weather_backend:latest
     ports:
       - "3001:3001"
     environment:
-      - MONGO_URI=mongodb://db:27017/mydb
-      - OPENWEATHER_API_KEY=4c1c12ba2378884a3a154aa927b00096
-      - HTTP_ADMIN_USER=admin
-      - HTTP_ADMIN_PASS=Pp@275688
+      - MONGO_URI=${MONGO_URI}
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      - HTTP_ADMIN_USER=${HTTP_ADMIN_USER}
+      - HTTP_ADMIN_PASS=${HTTP_ADMIN_PASS}
     networks:
       - mynetwork
     command: npm run start
@@ -21,11 +20,10 @@ services:
   frontend:
     build:
       context: ./weather-frontend  
-    # image: weather_frontend:latest
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:3001
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     networks:
       - mynetwork
     command: npm run dev

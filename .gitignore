@@ -1,4 +1,3 @@
 .env
-backend/.env
-frontend/.env
-docker/.env
+weather-backend/.env
+weather-frontend/.env
